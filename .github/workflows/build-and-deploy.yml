@@ -75,10 +75,27 @@ jobs:
             NEXT_PUBLIC_API_URL=${{ vars.NEXT_PUBLIC_API_URL || 'http://localhost:3001' }}
 
   deploy-hostinger:
-    if: ${{ github.ref == 'refs/heads/main' && secrets.HOSTINGER_HOST != '' && secrets.HOSTINGER_USER != '' && secrets.HOSTINGER_SSH_KEY != '' && secrets.HOSTINGER_APP_PATH != '' && secrets.HOSTINGER_GHCR_USER != '' && secrets.HOSTINGER_GHCR_TOKEN != '' }}
+    if: ${{ github.ref == 'refs/heads/main' }}
     needs: build-and-push
     runs-on: ubuntu-latest
     steps:
+      - name: Verify required deploy secrets
+        env:
+          HOSTINGER_HOST: ${{ secrets.HOSTINGER_HOST }}
+          HOSTINGER_USER: ${{ secrets.HOSTINGER_USER }}
+          HOSTINGER_SSH_KEY: ${{ secrets.HOSTINGER_SSH_KEY }}
+          HOSTINGER_APP_PATH: ${{ secrets.HOSTINGER_APP_PATH }}
+          HOSTINGER_GHCR_USER: ${{ secrets.HOSTINGER_GHCR_USER }}
+          HOSTINGER_GHCR_TOKEN: ${{ secrets.HOSTINGER_GHCR_TOKEN }}
+        run: |
+          set -e
+          test -n "$HOSTINGER_HOST"
+          test -n "$HOSTINGER_USER"
+          test -n "$HOSTINGER_SSH_KEY"
+          test -n "$HOSTINGER_APP_PATH"
+          test -n "$HOSTINGER_GHCR_USER"
+          test -n "$HOSTINGER_GHCR_TOKEN"
+
       - name: Deploy on Hostinger over SSH
         uses: appleboy/ssh-action@v1.0.3
         with:
