@@ -1,9 +1,12 @@
 [submodule "my-family-api"]
 	path = my-family-api
 	url = https://github.com/DafiMjd/my-family-api.git
+	branch = main
 [submodule "my-family-web-admin"]
 	path = my-family-web-admin
 	url = https://github.com/DafiMjd/my-family-web-admin.git
+	branch = main
 [submodule "my-family-web"]
 	path = my-family-web
 	url = https://github.com/DafiMjd/my-family-web.git
+	branch = main
