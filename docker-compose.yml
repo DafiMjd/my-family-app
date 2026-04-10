@@ -1,10 +1,6 @@
 services:
   db:
     image: postgres:16-alpine
-    environment:
-      POSTGRES_USER: family
-      POSTGRES_PASSWORD: family
-      POSTGRES_DB: family
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:
